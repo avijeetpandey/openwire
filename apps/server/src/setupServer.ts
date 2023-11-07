@@ -15,7 +15,7 @@ import cookieSession from "cookie-session";
 import HTTP_STATUS from "http-status-codes";
 import "express-async-errors";
 import compression from "compression";
-import { SERVER_PORT } from "./utils/app.utils";
+import { config } from "./config";
 
 export class OpenWireServer {
   private app: Application;
@@ -29,8 +29,8 @@ export class OpenWireServer {
       cookieSession({
         maxAge: 24 * 7 * 3600000,
         name: "session",
-        keys: ["test1", "test2"],
-        secure: false
+        keys: [config.COOKIE_SECRET_KEY_ONE!, config.COOKIE_SECRET_KEY_TWO!],
+        secure: config.ENV !== "development"
       })
     );
     app.use(hpp());
@@ -67,8 +67,8 @@ export class OpenWireServer {
   private createSocketServer(httpServer: Server): void {}
 
   private startHttpServer(httpServer: Server): void {
-    httpServer.listen(SERVER_PORT, () => {
-      console.log(`OperWire server up and running on port ${SERVER_PORT}`);
+    httpServer.listen(config.PORT, () => {
+      console.log(`OperWire server up and running on port ${config.PORT}`);
     });
   }
 
