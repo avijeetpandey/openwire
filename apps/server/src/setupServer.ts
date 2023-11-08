@@ -16,6 +16,9 @@ import HTTP_STATUS from "http-status-codes";
 import "express-async-errors";
 import compression from "compression";
 import { config } from "./config";
+import { Server as SocketServer } from "socket.io";
+import { createClient } from "redis";
+import { createAdapter } from "@socket.io/redis-adapter";
 
 export class OpenWireServer {
   private app: Application;
@@ -58,19 +61,39 @@ export class OpenWireServer {
   private async startServer(app: Application): Promise<void> {
     try {
       const httpServer: Server = new Server(this.app);
+      const socketIO: SocketServer = await this.createSocketServer(httpServer);
       this.startHttpServer(httpServer);
+      this.socketIOConnections(socketIO);
     } catch (error) {
       console.log(error);
     }
   }
 
-  private createSocketServer(httpServer: Server): void {}
+  private async createSocketServer(httpServer: Server): Promise<SocketServer> {
+    const io: SocketServer = new SocketServer(httpServer, {
+      cors: {
+        origin: "*",
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+      }
+    });
+
+    const pubClient = createClient({ url: config.REDIS_URL });
+    const subClient = pubClient.duplicate();
+
+    await Promise.all([pubClient.connect(), subClient.connect()]);
+    io.adapter(createAdapter(pubClient, subClient));
+
+    return io;
+  }
 
   private startHttpServer(httpServer: Server): void {
+    console.log(`Server has started with process id:  ${process.pid}`);
     httpServer.listen(config.PORT, () => {
       console.log(`OperWire server up and running on port ${config.PORT}`);
     });
   }
+
+  private socketIOConnections(io: SocketServer): void {}
 
   public start(): void {
     this.securityMiddleWare(this.app);

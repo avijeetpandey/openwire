@@ -10,3 +10,5 @@ export const NODE_ENV = process.env.NODE_ENV;
 export const COOKIE_SEECRET_KEY_ONE = process.env.COOKIE_SECRET_KEY_ONE;
 
 export const COOKIE_SEECRET_KEY_TWO = process.env.COOKIE_SECRET_KEY_TWO;
+
+export const REDIS_PORT = process.env.REDIS_PORT;
