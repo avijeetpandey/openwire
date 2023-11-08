@@ -12,3 +12,9 @@ export const COOKIE_SEECRET_KEY_ONE = process.env.COOKIE_SECRET_KEY_ONE;
 export const COOKIE_SEECRET_KEY_TWO = process.env.COOKIE_SECRET_KEY_TWO;
 
 export const REDIS_PORT = process.env.REDIS_PORT;
+
+export const CLOUD_NAME = process.env.CLOUD_NAME;
+
+export const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET;
+
+export const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;
