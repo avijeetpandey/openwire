@@ -12,7 +12,6 @@ import cors from "cors";
 import hpp from "hpp";
 import helmet from "helmet";
 import cookieSession from "cookie-session";
-import HTTP_STATUS from "http-status-codes";
 import "express-async-errors";
 import compression from "compression";
 import { config } from "./config";
@@ -20,6 +19,11 @@ import { Server as SocketServer } from "socket.io";
 import { createClient } from "redis";
 import { createAdapter } from "@socket.io/redis-adapter";
 import applicationRoutes from "./routes";
+import HTTP_CODES from "http-status-codes";
+import {
+  CustomError,
+  IErrorResponse
+} from "./shared/globals/helpers/custom-error";
 
 export class OpenWireServer {
   private app: Application;
@@ -59,7 +63,29 @@ export class OpenWireServer {
     applicationRoutes(app);
   }
 
-  private globalErrorHandler(app: Application): void {}
+  private globalErrorHandler(app: Application): void {
+    app.all("*", (request: Request, response: Response) => {
+      response.status(HTTP_CODES.NOT_FOUND).json({
+        message: `${request.originalUrl} not found`
+      });
+    });
+
+    // handling the custom errors
+    app.use(
+      (
+        error: IErrorResponse,
+        _req: Request,
+        res: Response,
+        next: NextFunction
+      ) => {
+        console.log(error);
+        if (error instanceof CustomError) {
+          return res.status(error.statusCode).json(error.serializErrors());
+        }
+        next();
+      }
+    );
+  }
 
   private async startServer(app: Application): Promise<void> {
     try {
