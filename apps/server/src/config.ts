@@ -45,7 +45,6 @@ class Config {
         throw new Error(`Configuration ${key} is undefined`);
       }
     }
-    console.log("Config loaded and injected into the application");
   }
 }
 
