@@ -1,7 +1,9 @@
-import { type Application } from "express";
+import { type Application } from 'express';
 
 export default (app: Application) => {
-  const routes = () => {};
+  const routes = () => {
+    console.log(app);
+  };
 
   routes();
 };
