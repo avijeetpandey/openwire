@@ -19,6 +19,7 @@ import { config } from "./config";
 import { Server as SocketServer } from "socket.io";
 import { createClient } from "redis";
 import { createAdapter } from "@socket.io/redis-adapter";
+import applicationRoutes from "./routes";
 
 export class OpenWireServer {
   private app: Application;
@@ -54,7 +55,9 @@ export class OpenWireServer {
     app.use(urlencoded({ extended: true, limit: "50mb" }));
   }
 
-  private routeMiddleWare(app: Application): void {}
+  private routeMiddleWare(app: Application): void {
+    applicationRoutes(app);
+  }
 
   private globalErrorHandler(app: Application): void {}
 
