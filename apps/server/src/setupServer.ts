@@ -75,7 +75,7 @@ export class OpenWireServer {
 
   private async startServer(app: Application): Promise<void> {
     try {
-      const httpServer: Server = new Server(this.app);
+      const httpServer: Server = new Server(app);
       const socketIO: SocketServer = await this.createSocketServer(httpServer);
       this.startHttpServer(httpServer);
       this.socketIOConnections(socketIO);
@@ -108,7 +108,9 @@ export class OpenWireServer {
     });
   }
 
-  private socketIOConnections(io: SocketServer): void {}
+  private socketIOConnections(io: SocketServer): void {
+    console.log(io);
+  }
 
   public start(): void {
     this.securityMiddleWare(this.app);

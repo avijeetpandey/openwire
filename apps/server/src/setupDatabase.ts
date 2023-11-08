@@ -11,7 +11,7 @@ export default () => {
       .then(() => {
         log.info('Connected to database');
       })
-      .catch((error: any) => {
+      .catch((error) => {
         log.error('DB Error: ', error);
         return process.exit(1);
       });
