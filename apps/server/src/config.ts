@@ -10,6 +10,8 @@ import {
   SERVER_PORT
 } from '@root/utils/app.utils';
 
+import { v2 as cloudinary } from 'cloudinary';
+
 import bunyan from 'bunyan';
 
 class Config {
@@ -53,6 +55,14 @@ class Config {
         throw new Error(`Configuration ${key} is undefined`);
       }
     }
+  }
+
+  public cloudinaryConfig(): void {
+    cloudinary.config({
+      cloud_name: this.CLOUD_NAME!,
+      api_key: this.CLOUDINARY_API_KEY!,
+      api_secret: this.CLOUDINARY_API_SECRET!
+    });
   }
 }
 
