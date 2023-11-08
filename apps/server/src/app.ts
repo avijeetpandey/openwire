@@ -1,7 +1,7 @@
-import express, { type Express } from "express";
-import { OpenWireServer } from "./setupServer";
-import connectToDatabase from "./setupDatabase";
-import { config } from "./config";
+import express, { type Express } from 'express';
+import { OpenWireServer } from './setupServer';
+import connectToDatabase from './setupDatabase';
+import { config } from './config';
 
 class Application {
   public initialize(): void {

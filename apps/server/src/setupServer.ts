@@ -1,32 +1,22 @@
-import {
-  type Application,
-  type Request,
-  type Response,
-  type NextFunction,
-  json,
-  urlencoded
-} from "express";
+import { type Application, type Request, type Response, type NextFunction, json, urlencoded } from 'express';
 
-import { Server } from "http";
-import cors from "cors";
-import hpp from "hpp";
-import helmet from "helmet";
-import cookieSession from "cookie-session";
-import "express-async-errors";
-import compression from "compression";
-import { config } from "./config";
-import { Server as SocketServer } from "socket.io";
-import { createClient } from "redis";
-import { createAdapter } from "@socket.io/redis-adapter";
-import applicationRoutes from "./routes";
-import HTTP_CODES from "http-status-codes";
-import {
-  CustomError,
-  IErrorResponse
-} from "./shared/globals/helpers/custom-error";
-import Logger from "bunyan";
+import { Server } from 'http';
+import cors from 'cors';
+import hpp from 'hpp';
+import helmet from 'helmet';
+import cookieSession from 'cookie-session';
+import 'express-async-errors';
+import compression from 'compression';
+import { config } from './config';
+import { Server as SocketServer } from 'socket.io';
+import { createClient } from 'redis';
+import { createAdapter } from '@socket.io/redis-adapter';
+import applicationRoutes from './routes';
+import HTTP_CODES from 'http-status-codes';
+import { CustomError, IErrorResponse } from './shared/globals/helpers/custom-error';
+import Logger from 'bunyan';
 
-const log: Logger = config.createLogger("server");
+const log: Logger = config.createLogger('server');
 
 export class OpenWireServer {
   private app: Application;
@@ -39,27 +29,27 @@ export class OpenWireServer {
     app.use(
       cookieSession({
         maxAge: 24 * 7 * 3600000,
-        name: "session",
+        name: 'session',
         keys: [config.COOKIE_SECRET_KEY_ONE!, config.COOKIE_SECRET_KEY_TWO!],
-        secure: config.ENV !== "development"
+        secure: config.ENV !== 'development'
       })
     );
     app.use(hpp());
     app.use(helmet());
     app.use(
       cors({
-        origin: "*",
+        origin: '*',
         credentials: true, // for cookies to be used
         optionsSuccessStatus: 200,
-        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
       })
     );
   }
 
   private standardMiddleWare(app: Application): void {
     app.use(compression());
-    app.use(json({ limit: "50mb" }));
-    app.use(urlencoded({ extended: true, limit: "50mb" }));
+    app.use(json({ limit: '50mb' }));
+    app.use(urlencoded({ extended: true, limit: '50mb' }));
   }
 
   private routeMiddleWare(app: Application): void {
@@ -67,27 +57,20 @@ export class OpenWireServer {
   }
 
   private globalErrorHandler(app: Application): void {
-    app.all("*", (request: Request, response: Response) => {
+    app.all('*', (request: Request, response: Response) => {
       response.status(HTTP_CODES.NOT_FOUND).json({
         message: `${request.originalUrl} not found`
       });
     });
 
     // handling the custom errors
-    app.use(
-      (
-        error: IErrorResponse,
-        _req: Request,
-        res: Response,
-        next: NextFunction
-      ) => {
-        log.error(error);
-        if (error instanceof CustomError) {
-          return res.status(error.statusCode).json(error.serializErrors());
-        }
-        next();
+    app.use((error: IErrorResponse, _req: Request, res: Response, next: NextFunction) => {
+      log.error(error);
+      if (error instanceof CustomError) {
+        return res.status(error.statusCode).json(error.serializErrors());
       }
-    );
+      next();
+    });
   }
 
   private async startServer(app: Application): Promise<void> {
@@ -104,8 +87,8 @@ export class OpenWireServer {
   private async createSocketServer(httpServer: Server): Promise<SocketServer> {
     const io: SocketServer = new SocketServer(httpServer, {
       cors: {
-        origin: "*",
-        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+        origin: '*',
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
       }
     });
 
