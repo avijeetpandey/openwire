@@ -1,5 +1,5 @@
 import HTTP_STATUS from 'http-status-codes';
-import { CustomError } from './custom-error';
+import { CustomError } from '@global/helpers/custom-error';
 
 export class JoiValidationError extends CustomError {
   statusCode = HTTP_STATUS.BAD_REQUEST;

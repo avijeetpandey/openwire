@@ -1,4 +1,11 @@
-import { COOKIE_SEECRET_KEY_ONE, COOKIE_SEECRET_KEY_TWO, MONGO_CONNECTION_URI, NODE_ENV, REDIS_PORT, SERVER_PORT } from './utils/app.utils';
+import {
+  COOKIE_SEECRET_KEY_ONE,
+  COOKIE_SEECRET_KEY_TWO,
+  MONGO_CONNECTION_URI,
+  NODE_ENV,
+  REDIS_PORT,
+  SERVER_PORT
+} from '@root/utils/app.utils';
 
 import bunyan from 'bunyan';
 

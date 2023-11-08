@@ -7,13 +7,13 @@ import helmet from 'helmet';
 import cookieSession from 'cookie-session';
 import 'express-async-errors';
 import compression from 'compression';
-import { config } from './config';
+import { config } from '@root/config';
 import { Server as SocketServer } from 'socket.io';
 import { createClient } from 'redis';
 import { createAdapter } from '@socket.io/redis-adapter';
-import applicationRoutes from './routes';
+import applicationRoutes from '@root/routes';
 import HTTP_CODES from 'http-status-codes';
-import { CustomError, IErrorResponse } from './shared/globals/helpers/custom-error';
+import { CustomError, IErrorResponse } from '@global/helpers/custom-error';
 import Logger from 'bunyan';
 
 const log: Logger = config.createLogger('server');
