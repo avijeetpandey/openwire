@@ -39,11 +39,13 @@
     "eslint-config-prettier": "^9.0.0",
     "nodemon": "^3.0.1",
     "prettier": "^3.0.3",
+    "ts-node": "^10.9.1",
+    "tsc-alias": "^1.8.8",
     "tsconfig-paths": "^4.2.0"
   },
   "scripts": {
     "dev": "nodemon -r tsconfig-paths/register src/app.ts | ./node_modules/.bin/bunyan",
-    "build": "tsc",
+    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
     "lint:check": "eslint 'src/**/*.ts'",
     "lint:fix": "eslint 'src/**/*.ts' --fix",
     "prettier:check": "prettier --check 'src/**/*.{ts,json}'",
