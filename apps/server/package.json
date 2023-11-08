@@ -9,6 +9,7 @@
     "@socket.io/redis-adapter": "^8.2.1",
     "@types/body-parser": "^1.19.5",
     "body-parser": "^1.20.2",
+    "bunyan": "^1.8.15",
     "compression": "^1.7.4",
     "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
@@ -24,6 +25,7 @@
     "typescript": "^5.2.2"
   },
   "devDependencies": {
+    "@types/bunyan": "^1.8.11",
     "@types/compression": "^1.7.5",
     "@types/cookie-session": "^2.0.47",
     "@types/cors": "^2.8.16",
@@ -33,7 +35,7 @@
     "tsconfig-paths": "^4.2.0"
   },
   "scripts": {
-    "dev": "nodemon -r tsconfig-paths/register src/app.ts",
+    "dev": "nodemon -r tsconfig-paths/register src/app.ts | ./node_modules/.bin/bunyan",
     "build": "tsc"
   }
 }

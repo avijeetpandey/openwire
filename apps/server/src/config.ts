@@ -7,6 +7,8 @@ import {
   SERVER_PORT
 } from "./utils/app.utils";
 
+import bunyan from "bunyan";
+
 class Config {
   public DATABASE_URL: string | undefined;
   public PORT: number | undefined;
@@ -31,6 +33,10 @@ class Config {
     this.COOKIE_SECRET_KEY_ONE = COOKIE_SEECRET_KEY_ONE || "";
     this.COOKIE_SECRET_KEY_TWO = COOKIE_SEECRET_KEY_TWO || "";
     this.REDIS_URL = REDIS_PORT || this.DEFAULT_REDIS_URL;
+  }
+
+  public createLogger(name: string): bunyan {
+    return bunyan.createLogger({ name, level: "debug" });
   }
 
   public validateConfig(): void {

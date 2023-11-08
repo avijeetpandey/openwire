@@ -24,6 +24,9 @@ import {
   CustomError,
   IErrorResponse
 } from "./shared/globals/helpers/custom-error";
+import Logger from "bunyan";
+
+const log: Logger = config.createLogger("server");
 
 export class OpenWireServer {
   private app: Application;
@@ -78,7 +81,7 @@ export class OpenWireServer {
         res: Response,
         next: NextFunction
       ) => {
-        console.log(error);
+        log.error(error);
         if (error instanceof CustomError) {
           return res.status(error.statusCode).json(error.serializErrors());
         }
@@ -94,7 +97,7 @@ export class OpenWireServer {
       this.startHttpServer(httpServer);
       this.socketIOConnections(socketIO);
     } catch (error) {
-      console.log(error);
+      log.error(error);
     }
   }
 
@@ -116,9 +119,9 @@ export class OpenWireServer {
   }
 
   private startHttpServer(httpServer: Server): void {
-    console.log(`Server has started with process id:  ${process.pid}`);
+    log.info(`Server has started with process id:  ${process.pid}`);
     httpServer.listen(config.PORT, () => {
-      console.log(`OperWire server up and running on port ${config.PORT}`);
+      log.info(`OperWire server up and running on port ${config.PORT}`);
     });
   }
 
