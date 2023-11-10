@@ -8,7 +8,7 @@ import {
   NODE_ENV,
   REDIS_PORT,
   SERVER_PORT
-} from '@root/utils/app.utils';
+} from '@root/utils/constants';
 
 import { v2 as cloudinary } from 'cloudinary';
 

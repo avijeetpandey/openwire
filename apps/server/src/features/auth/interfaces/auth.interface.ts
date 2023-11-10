@@ -1,4 +1,5 @@
-import { Document, ObjectId } from 'mongoose';
+import { Document } from 'mongoose';
+import { ObjectId } from 'mongodb';
 
 declare global {
   namespace Express {

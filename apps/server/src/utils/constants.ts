@@ -18,3 +18,5 @@ export const CLOUD_NAME = process.env.CLOUD_NAME;
 export const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET;
 
 export const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;
+
+export const BASE_PATH = '/api/v1';
