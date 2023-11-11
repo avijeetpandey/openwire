@@ -15,7 +15,7 @@ export class SignIn {
   public async read(req: Request, res: Response): Promise<Response> {
     const { username, password } = req.body;
 
-    const existingUser: IAuthDocument = await authService.getUserByUsername(username);
+    const existingUser: IAuthDocument = await authService.getAuthUserByUsername(username);
     if (!existingUser) {
       throw new BadRequestError('Invalid credentials');
     }
@@ -25,12 +25,13 @@ export class SignIn {
     if (!passwordsMatch) {
       throw new BadRequestError('Invalid credentials');
     }
+    console.log(existingUser._id.toString());
+    const user: IUserDocument = await userService.getUserByAuthId(existingUser._id.toString());
 
-    const user: IUserDocument = await userService.getUserByAuthId(`${existingUser._id}`);
-
+    // FIX ME
     const userUserJWT: string = JWT.sign(
       {
-        userId: user._id,
+        userId: existingUser._id,
         uId: existingUser.uId,
         email: existingUser.email,
         username: existingUser.username,
