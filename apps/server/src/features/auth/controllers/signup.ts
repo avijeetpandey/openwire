@@ -14,6 +14,7 @@ import { UserCache } from '@service/redis/user.cache';
 import { CLOUD_NAME } from '@root/utils/constants';
 import { omit } from 'lodash';
 import { authQueue } from '@service/queues/auth.queue';
+import { userQueue } from '@service/queues/user.queue';
 
 const userCache: UserCache = new UserCache();
 
@@ -48,6 +49,7 @@ export class SignUp {
     // add to database
     omit(userDataForCache, ['uId', 'username', 'email', 'password', 'avatarColor']);
     authQueue.addAuthUserJob('addAuthUserToDB', { value: userDataForCache });
+    userQueue.addUserJob('addUserToDB', { value: userDataForCache });
 
     return res.status(HTTP_CODES.CREATED).json({
       message: 'user created succesfully',
