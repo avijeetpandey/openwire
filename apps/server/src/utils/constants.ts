@@ -29,4 +29,6 @@ export const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
 
 export const SENDGRID_SENDER = process.env.SENDGRID_SENDER;
 
+export const CLIENT_URL = process.env.CLIENT_URL;
+
 export const BASE_PATH = '/api/v1';

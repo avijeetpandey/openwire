@@ -1,4 +1,5 @@
 import {
+  CLIENT_URL,
   CLOUDINARY_API_KEY,
   CLOUDINARY_API_SECRET,
   CLOUD_NAME,
@@ -34,6 +35,7 @@ class Config {
   public SENDER_EMAIL_PASSWORD: string | undefined;
   public SENDGRID_API_KEY: string | undefined;
   public SENDGRID_SENDER: string | undefined;
+  public CLIENT_URL: string | undefined;
 
   private readonly DEFAULT_DATABASE_URL: string = 'mongodb://127.0.0.1:27017/openwire';
 
@@ -58,6 +60,7 @@ class Config {
     this.SENDER_EMAIL_PASSWORD = SENDER_EMAIL_PASSWORD;
     this.SENDGRID_API_KEY = SENDGRID_API_KEY;
     this.SENDGRID_SENDER = SENDGRID_SENDER;
+    this.CLIENT_URL = CLIENT_URL;
   }
 
   public createLogger(name: string): bunyan {

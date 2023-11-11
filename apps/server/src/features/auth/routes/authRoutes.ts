@@ -1,3 +1,4 @@
+import { Password } from '@auth/controllers/password';
 import { SignIn } from '@auth/controllers/signin';
 import { SignOut } from '@auth/controllers/signout';
 import { SignUp } from '@auth/controllers/signup';
@@ -12,6 +13,7 @@ class AuthRoutes {
   public routes(): Router {
     this.router.post('/signup', SignUp.prototype.create);
     this.router.post('/signin', SignIn.prototype.read);
+    this.router.post('/password-reset', Password.prototype.create);
     return this.router;
   }
 

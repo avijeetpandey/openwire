@@ -19,6 +19,21 @@ class AuthService {
   public async createAuthUser(data: IAuthDocument): Promise<void> {
     await AuthModel.create(data);
   }
+
+  public async updatePasswordToken(authId: string, token: string, tokenExpirationTime: number): Promise<void> {
+    await AuthModel.updateOne(
+      { _id: authId },
+      {
+        passwordResetToken: token,
+        passwordResetExpires: tokenExpirationTime
+      }
+    );
+  }
+
+  public async getAuthUserByEmail(email: string): Promise<IAuthDocument> {
+    const user: IAuthDocument = (await AuthModel.findOne({ email: Helpers.lowercase(email) }).exec()) as IAuthDocument;
+    return user;
+  }
 }
 
 export const authService = new AuthService();
