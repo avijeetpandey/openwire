@@ -24,7 +24,10 @@ export interface IAuthDocument extends Document {
   username: string;
   email: string;
   password?: string;
+  avatarColor: string;
   createdAt: Date;
+  passwordResetToken?: string;
+  passwordResetExpires?: number | string;
   comparePassword(password: string): Promise<boolean>;
   hashPassword(password: string): Promise<string>;
 }
