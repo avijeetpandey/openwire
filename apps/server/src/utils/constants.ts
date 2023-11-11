@@ -21,4 +21,12 @@ export const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;
 
 export const JSON_WEB_TOKEN_SECRET = process.env.JSON_TOKEN_SECRET;
 
+export const SENDER_EMAIL = process.env.SENDER_EMAIL;
+
+export const SENDER_EMAIL_PASSWORD = process.env.SENDER_EMAIL_PASSWORD;
+
+export const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
+
+export const SENDGRID_SENDER = process.env.SENDGRID_SENDER;
+
 export const BASE_PATH = '/api/v1';
