@@ -41,10 +41,20 @@ export class SignIn {
 
     req.session = { jwt: userUserJWT };
 
+    const userDocument: IUserDocument = {
+      ...user,
+      authId: existingUser._id,
+      username: existingUser.username,
+      email: existingUser.email,
+      avatarColor: existingUser.avatarColor,
+      createdAt: existingUser.createdAt,
+      uId: existingUser.uId
+    } as IUserDocument;
+
     return res.status(HTTP_CODES.OK).json({
       message: 'User login succesfull',
       data: {
-        user: existingUser,
+        user: userDocument,
         token: userUserJWT
       }
     });
