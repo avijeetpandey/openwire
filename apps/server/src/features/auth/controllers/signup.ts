@@ -15,6 +15,8 @@ import { CLOUD_NAME } from '@root/utils/constants';
 import { omit } from 'lodash';
 import { authQueue } from '@service/queues/auth.queue';
 import { userQueue } from '@service/queues/user.queue';
+import JWT from 'jsonwebtoken';
+import { config } from '@root/config';
 
 const userCache: UserCache = new UserCache();
 
@@ -51,9 +53,16 @@ export class SignUp {
     authQueue.addAuthUserJob('addAuthUserToDB', { value: userDataForCache });
     userQueue.addUserJob('addUserToDB', { value: userDataForCache });
 
+    const jwtToken: string = SignUp.prototype.signupToken(authData, userObjectId);
+
+    req.session = { jwt: jwtToken };
+
     return res.status(HTTP_CODES.CREATED).json({
       message: 'user created succesfully',
-      data: authData
+      data: {
+        user: userDataForCache,
+        token: jwtToken
+      }
     });
   }
 
@@ -105,5 +114,19 @@ export class SignUp {
         youtube: ''
       }
     } as unknown as IUserDocument;
+  }
+
+  // generate json web token
+  private signupToken(data: IAuthDocument, userObjectId: ObjectId): string {
+    return JWT.sign(
+      {
+        userId: userObjectId,
+        uId: data.uId,
+        email: data.email,
+        username: data.username,
+        avatarColor: data.avatarColor
+      },
+      config.JSON_TOKEN_SECRET!
+    );
   }
 }

@@ -4,6 +4,7 @@ import {
   CLOUD_NAME,
   COOKIE_SEECRET_KEY_ONE,
   COOKIE_SEECRET_KEY_TWO,
+  JSON_WEB_TOKEN_SECRET,
   MONGO_CONNECTION_URI,
   NODE_ENV,
   REDIS_PORT,
@@ -24,6 +25,7 @@ class Config {
   public CLOUD_NAME: string | undefined;
   public CLOUDINARY_API_KEY: string | undefined;
   public CLOUDINARY_API_SECRET: string | undefined;
+  public JSON_TOKEN_SECRET: string | undefined;
 
   private readonly DEFAULT_DATABASE_URL: string = 'mongodb://127.0.0.1:27017/openwire';
 
@@ -43,6 +45,7 @@ class Config {
     this.CLOUD_NAME = CLOUD_NAME;
     this.CLOUDINARY_API_SECRET = CLOUDINARY_API_SECRET;
     this.CLOUDINARY_API_KEY = CLOUDINARY_API_KEY;
+    this.JSON_TOKEN_SECRET = JSON_WEB_TOKEN_SECRET;
   }
 
   public createLogger(name: string): bunyan {

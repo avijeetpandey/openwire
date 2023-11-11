@@ -19,4 +19,6 @@ export const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET;
 
 export const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;
 
+export const JSON_WEB_TOKEN_SECRET = process.env.JSON_TOKEN_SECRET;
+
 export const BASE_PATH = '/api/v1';
