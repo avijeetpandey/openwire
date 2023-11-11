@@ -108,9 +108,7 @@ export class OpenWireServer {
     });
   }
 
-  private socketIOConnections(io: SocketServer): void {
-    console.log(io);
-  }
+  private socketIOConnections(_io: SocketServer): void {}
 
   public start(): void {
     this.securityMiddleWare(this.app);
