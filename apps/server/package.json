@@ -48,6 +48,7 @@
     "eslint-config-prettier": "^9.0.0",
     "nodemon": "^3.0.1",
     "prettier": "^3.0.3",
+    "redis-commander": "^0.8.0",
     "ts-node": "^10.9.1",
     "tsc-alias": "^1.8.8",
     "tsconfig-paths": "^4.2.0"
@@ -58,6 +59,7 @@
     "lint:check": "eslint 'src/**/*.ts'",
     "lint:fix": "eslint 'src/**/*.ts' --fix",
     "prettier:check": "prettier --check 'src/**/*.{ts,json}'",
-    "prettier:fix": "prettier --write 'src/**/*.{ts,json}'"
+    "prettier:fix": "prettier --write 'src/**/*.{ts,json}'",
+    "redis:ui": "yarn redis-commander"
   }
 }
