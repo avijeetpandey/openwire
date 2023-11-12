@@ -51,7 +51,7 @@ export class Create {
     // save data to the mongodb via worker
     await postQueue.addPostJob('addPostToDB', { key: req.currentUser!.userId, value: createdPost });
 
-    return res.status(HTTP_CODES.OK).json({
+    return res.status(HTTP_CODES.CREATED).json({
       message: 'Post created'
     });
   }
@@ -98,6 +98,6 @@ export class Create {
 
     postQueue.addPostJob('addPostToDB', { key: req.currentUser!.userId, value: createdPost });
 
-    res.status(HTTP_CODES.CREATED).json({ message: 'Post created with image successfully' });
+    res.status(HTTP_CODES.CREATED).json({ message: 'Post created with image' });
   }
 }
