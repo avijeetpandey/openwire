@@ -1,0 +1,20 @@
+@baseUrl = http://localhost:5175
+@urlPath = api/v1
+
+###
+POST {{baseUrl}}/{{urlPath}}/post
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+# Privacy - Public | Private | Followers
+# Feelings - like | love | wow | happy | sad | angry
+
+{
+  "post": "This is a sample post created by vscode",
+  "bgColor": "#4aa1f3",
+  "privacy": "Public",
+  "gifUrl": "",
+  "profilePicture": "https://res.cloudinary.com/dptep6bk0/image/upload/v1699719470/654fa92ce7db3b47dee97ba0'",
+  "feelings": "happy"
+}
