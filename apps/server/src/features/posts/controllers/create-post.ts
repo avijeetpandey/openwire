@@ -1,5 +1,5 @@
 import { joiValidation } from '@global/decorators/joi-validation.decorators';
-import { postSchema } from '../schema/post.scheme';
+import { postSchema, postWithImagesSchema } from '../schema/post.scheme';
 import { Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
 import { IPostDocument } from '../interfaces/post.interface';
@@ -7,6 +7,9 @@ import HTTP_CODES from 'http-status-codes';
 import { postCache } from '@service/redis/post.cache';
 import { socketIOPostObject } from '@socket/post';
 import { postQueue } from '@service/queues/post.queue';
+import { UploadApiResponse } from 'cloudinary';
+import { uploads } from '@global/helpers/cloudinary-upload';
+import { BadRequestError } from '@global/helpers/error-handler';
 
 export class Create {
   @joiValidation(postSchema)
@@ -51,5 +54,50 @@ export class Create {
     return res.status(HTTP_CODES.OK).json({
       message: 'Post created'
     });
+  }
+
+  @joiValidation(postWithImagesSchema)
+  public async postWithImage(req: Request, res: Response): Promise<void> {
+    const { post, bgColor, privacy, gifUrl, profilePicture, feelings, image } = req.body;
+
+    const result: UploadApiResponse = (await uploads(image)) as UploadApiResponse;
+
+    if (!result?.public_id) {
+      throw new BadRequestError(result.message);
+    }
+
+    const postObjectId: ObjectId = new ObjectId();
+
+    const createdPost: IPostDocument = {
+      _id: postObjectId,
+      userId: req.currentUser!.userId,
+      avatarColor: req.currentUser!.avatarColor,
+      username: req.currentUser!.username,
+      email: req.currentUser!.email,
+      post,
+      bgColor,
+      privacy,
+      profilePicture,
+      gifUrl,
+      feelings,
+      imgId: result.public_id,
+      imgVersion: result.version.toString(),
+      createdAt: new Date(),
+      reactions: { like: 0, love: 0, haha: 0, sad: 0, wow: 0, angry: 0 },
+      commentsCount: 0
+    } as IPostDocument;
+
+    socketIOPostObject.emit('add post', createdPost);
+
+    await postCache.savePostToCache({
+      key: postObjectId,
+      currentUserId: `${req.currentUser!.userId}`,
+      uId: `${req.currentUser!.uId}`,
+      createdPost
+    });
+
+    postQueue.addPostJob('addPostToDB', { key: req.currentUser!.userId, value: createdPost });
+
+    res.status(HTTP_CODES.CREATED).json({ message: 'Post created with image successfully' });
   }
 }
