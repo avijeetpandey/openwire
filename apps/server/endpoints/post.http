@@ -11,10 +11,10 @@ withCredentials: true
 # Feelings - like | love | wow | happy | sad | angry
 
 {
-  "post": "This is a sample post created by vscode",
+  "post": "This is a third post which is followers only created again by vscode oh my god",
   "bgColor": "#4aa1f3",
-  "privacy": "Public",
+  "privacy": "Followers",
   "gifUrl": "",
   "profilePicture": "https://res.cloudinary.com/dptep6bk0/image/upload/v1699719470/654fa92ce7db3b47dee97ba0'",
-  "feelings": "happy"
+  "feelings": "angry"
 }
