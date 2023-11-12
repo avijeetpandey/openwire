@@ -1,81 +1,65 @@
-# Turborepo starter
+## Openwire :tada: :rocket:
 
-This is an official starter Turborepo.
+A Backend API implementation of social media application with the ability to authenticate users and create posts with image and without images
 
-## Using this example
+### Things used for development
 
-Run the following command:
+- `Typescript`
+- `Express`
+- `Cloudinary`
+- `MongoDB`
+- `Turbo mono repo`
+- `Jest`
+- `JWT`
+- `SocketIO`
+- `Redis`
+- `Bull messaging queue`
+- `Eslint` and `Prettier`
+- `Bunyan logger`
 
-```sh
-npx create-turbo@latest
-```
+## Steps to run the application
 
-## What's inside?
+- `git clone the repo`
+- `cd apps/server and yarn install` - this will install all the dependencies
+- `create .env file and fill with data from .env.example`
+- in the root folder `yarn dev` this will spin up the server on PORT `5175`
 
-This Turborepo includes the following packages/apps:
+Before this make sure you have `REDIS` and `MONGODB` up and running
 
-### Apps and Packages
+## Commands for the server
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
+- `yarn build` - this will build the server from typescript to javascript
+- `yarn test` - this will run all the tests for users and posts
+- `yarn dev` - runs the server in development mode with nodemon watcher
+- `yarn lint` - checks for linting errors
+- `yarn lint:fix` - fix the lint errors
+- `yarn redis:ui` - runs redis-commander ui so that all redis keys can be seen on UI
+- `prettier:check` - checks for formatting issues
+- `prettier:fix` - fixes the formatting issues
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+## Folder structure
 
-### Utilities
+The folder stucture of the application is standard, there is a folder corresponding to each feature and has the following things inside
 
-This Turborepo has some additional tools already setup for you:
+- `controllers` - controllers for the endpoints
+- `interfaces` - interfaces of the feature is defined here
+- `models` - mongodb models are placed here for IO to mongodb
+- `schemes` - validation for requests coming to backend via `Joi`
+- `routes` - routes for the feature that are used inside the application for the particular feature
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+Apart from that `Shared` folder contains the frequently used or shared code that is being used by multiple features
 
-### Build
+- `globals`
+  - `decorators` - contains decorators for request validation
+  - `helpers` - container codes for middlerwares and other helper functions example custom errors etc
+- `services`
+  - `db` - contains implementation of calls to mongodb
+  - `services` - contains the implementation of various services need by auth and post controllers
+  - `email` - contains implementation of MailTransporter class
+  - `queues` - contains code related to various queues (auth,user,post) etc
+  - `redis` - contains implementation of redis cache implementation
+- `workers` - contains code for workers that utilises and processed data in the queue
 
-To build all apps and packages, run the following command:
+The Data of the queue is also accesible by `Bull Dashboard` on endpoint `localhost:5175/queues`
 
-```
-cd my-turborepo
-pnpm build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm dev
-```
-
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+Made with ❤️ using Typescript
