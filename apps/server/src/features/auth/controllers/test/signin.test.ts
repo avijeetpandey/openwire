@@ -118,8 +118,10 @@ describe('SignIn', () => {
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({
       message: 'User login succesfull',
-      user: mergedAuthAndUserData,
-      token: req.session?.jwt
+      data: {
+        user: mergedAuthAndUserData,
+        token: req.session?.jwt
+      }
     });
   });
 });

@@ -15,6 +15,7 @@ import applicationRoutes from '@root/routes';
 import HTTP_CODES from 'http-status-codes';
 import { CustomError, IErrorResponse } from '@global/helpers/custom-error';
 import Logger from 'bunyan';
+import { SocketIOPostHandler } from '@socket/post';
 
 const log: Logger = config.createLogger('server');
 
@@ -108,7 +109,10 @@ export class OpenWireServer {
     });
   }
 
-  private socketIOConnections(_io: SocketServer): void {}
+  private socketIOConnections(io: SocketServer): void {
+    const postSocketHandler: SocketIOPostHandler = new SocketIOPostHandler(io);
+    postSocketHandler.listen();
+  }
 
   public start(): void {
     this.securityMiddleWare(this.app);
