@@ -74,6 +74,7 @@
     "prettier:check": "prettier --check 'src/**/*.{ts,json}'",
     "prettier:fix": "prettier --write 'src/**/*.{ts,json}'",
     "redis:ui": "yarn redis-commander",
-    "test": "jest --coverage=true -w=1 --forceExit --detectOpenHandles --watchAll=false"
+    "test": "jest --coverage=true -w=1 --forceExit --detectOpenHandles --watchAll=false",
+    "start": "nodemon ./build/src/app.js | ./node_modules/.bin/bunyan"
   }
 }
